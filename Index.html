@@ -1,55 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Properties</title>
+<title>Skyline Properties</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body { background:#f5f5f5; }
+.card:hover { transform:scale(1.05); transition:0.3s; }
+.card img { height:200px; object-fit:cover; }
+</style>
 </head>
 
 <body>
 
-<select id="price">
-<option value="all">All</option>
-<option value="50"><50L</option>
-<option value="100">50-100L</option>
-<option value="101">>1Cr</option>
+<!-- Navbar -->
+<nav class="navbar bg-dark p-3">
+<span class="text-white fs-4">🏠 Skyline Properties</span>
+
+<select id="price" class="form-select w-25">
+<option value="all">All Prices</option>
+<option value="50">Below 50L</option>
+<option value="100">50L-1Cr</option>
+<option value="101">Above 1Cr</option>
 </select>
 
-<select id="bhk">
-<option value="all">All</option>
-<option value="1">1BHK</option>
-<option value="2">2BHK</option>
-<option value="3">3BHK</option>
+<select id="bhk" class="form-select w-25">
+<option value="all">All BHK</option>
+<option value="1">1 BHK</option>
+<option value="2">2 BHK</option>
+<option value="3">3 BHK</option>
 </select>
+</nav>
 
-<div class="container mt-3">
-<div class="row">
+<!-- Properties -->
+<div class="container mt-4">
+<div class="row g-4">
 
 <div class="col-md-4 prop" data-price="45" data-bhk="1">
-<img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be" width="100%">
-<p>1BHK ₹45L</p>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be">
+<div class="card-body">
+<h5>1 BHK</h5>
+<p>₹45L</p>
+</div>
+</div>
 </div>
 
 <div class="col-md-4 prop" data-price="60" data-bhk="2">
-<img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" width="100%">
-<p>2BHK ₹60L</p>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2">
+<div class="card-body">
+<h5>2 BHK</h5>
+<p>₹60L</p>
+</div>
+</div>
 </div>
 
 <div class="col-md-4 prop" data-price="120" data-bhk="3">
-<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" width="100%">
-<p>3BHK ₹1.2Cr</p>
+<div class="card">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
+<div class="card-body">
+<h5>3 BHK</h5>
+<p>₹1.2Cr</p>
+</div>
+</div>
 </div>
 
 </div>
 </div>
 
+<!-- JS Filter -->
 <script>
-let p=document.getElementById("price"), b=document.getElementById("bhk");
-document.querySelectorAll(".prop").forEach(x=>{
-p.onchange=b.onchange=()=>{
-let pr=x.dataset.price, bh=x.dataset.bhk;
-x.style.display=( (p.value=="all"||(p.value=="50"&&pr<50)||(p.value=="100"&&pr>=50&&pr<=100)||(p.value=="101"&&pr>100)) && (b.value=="all"||b.value==bh) )?"block":"none";
-};
+let price = document.getElementById("price");
+let bhk = document.getElementById("bhk");
+let props = document.querySelectorAll(".prop");
+
+function filter(){
+props.forEach(p=>{
+let pr = p.dataset.price;
+let b = p.dataset.bhk;
+
+let show = true;
+
+if(price.value!="all"){
+if(price.value=="50" && pr>=50) show=false;
+if(price.value=="100" && (pr<50 || pr>100)) show=false;
+if(price.value=="101" && pr<=100) show=false;
+}
+
+if(bhk.value!="all" && bhk.value!=b) show=false;
+
+p.style.display = show ? "block":"none";
 });
+}
+
+price.onchange = filter;
+bhk.onchange = filter;
 </script>
 
 </body>
