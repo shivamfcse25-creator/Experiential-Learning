@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Properties</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<select id="price">
+<option value="all">All</option>
+<option value="50"><50L</option>
+<option value="100">50-100L</option>
+<option value="101">>1Cr</option>
+</select>
+
+<select id="bhk">
+<option value="all">All</option>
+<option value="1">1BHK</option>
+<option value="2">2BHK</option>
+<option value="3">3BHK</option>
+</select>
+
+<div class="container mt-3">
+<div class="row">
+
+<div class="col-md-4 prop" data-price="45" data-bhk="1">
+<img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be" width="100%">
+<p>1BHK ₹45L</p>
+</div>
+
+<div class="col-md-4 prop" data-price="60" data-bhk="2">
+<img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2" width="100%">
+<p>2BHK ₹60L</p>
+</div>
+
+<div class="col-md-4 prop" data-price="120" data-bhk="3">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" width="100%">
+<p>3BHK ₹1.2Cr</p>
+</div>
+
+</div>
+</div>
+
+<script>
+let p=document.getElementById("price"), b=document.getElementById("bhk");
+document.querySelectorAll(".prop").forEach(x=>{
+p.onchange=b.onchange=()=>{
+let pr=x.dataset.price, bh=x.dataset.bhk;
+x.style.display=( (p.value=="all"||(p.value=="50"&&pr<50)||(p.value=="100"&&pr>=50&&pr<=100)||(p.value=="101"&&pr>100)) && (b.value=="all"||b.value==bh) )?"block":"none";
+};
+});
+</script>
+
+</body>
+</html>
